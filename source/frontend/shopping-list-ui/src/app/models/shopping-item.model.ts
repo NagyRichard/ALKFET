@@ -9,4 +9,5 @@ export interface ShoppingItem {
   note?: string;
   createdAt: string;
   updatedAt: string;
+  isCompleted: boolean;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -14,6 +14,7 @@ import { ShoppingItem } from '../../models/shopping-item.model';
 export class ListDetails implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly shoppingApi = inject(ShoppingApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   listId = '';
   items: ShoppingItem[] = [];
@@ -46,10 +47,12 @@ export class ListDetails implements OnInit {
       next: (items) => {
         this.items = items;
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Nem sikerült betölteni a tételeket.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -68,7 +71,7 @@ export class ListDetails implements OnInit {
       category: this.newItem.category,
       note: this.newItem.note.trim() || undefined
     }).subscribe({
-      next: () => {
+      next: (newItem) => {
         this.newItem = {
           name: '',
           quantity: 1,
@@ -76,32 +79,44 @@ export class ListDetails implements OnInit {
           category: 'Other',
           note: ''
         };
-        this.loadItems();
+
+        this.items = [newItem, ...this.items];
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Nem sikerült hozzáadni a tételt.';
+        this.cdr.detectChanges();
       }
     });
   }
 
-  toggleItem(itemId: string): void {
-    this.shoppingApi.toggleItem(this.listId, itemId).subscribe({
-      next: () => {
-        this.loadItems();
-      },
-      error: () => {
-        this.errorMessage = 'Nem sikerült módosítani a tétel állapotát.';
-      }
-    });
-  }
+toggleItem(itemId: string): void {
+  this.shoppingApi.toggleItem(this.listId, itemId).subscribe({
+    next: () => {
+      this.items = this.items.map(item =>
+        item.id === itemId
+          ? { ...item, isPurchased: !item.isPurchased }
+          : item
+      );
+
+      this.cdr.detectChanges();
+    },
+    error: () => {
+      this.errorMessage = 'Nem sikerült módosítani a tétel állapotát.';
+      this.cdr.detectChanges();
+    }
+  });
+}
 
   deleteItem(itemId: string): void {
     this.shoppingApi.deleteItem(this.listId, itemId).subscribe({
       next: () => {
-        this.loadItems();
+        this.items = this.items.filter(x => x.id !== itemId);
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Nem sikerült törölni a tételt.';
+        this.cdr.detectChanges();
       }
     });
   }

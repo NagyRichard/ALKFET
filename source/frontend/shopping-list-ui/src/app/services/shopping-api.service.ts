@@ -20,6 +20,10 @@ export class ShoppingApiService {
     return this.http.post<ShoppingList>(`${this.baseUrl}/lists`, { name });
   }
 
+  deleteList(listId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/lists/${listId}`);
+  }
+
   getItems(listId: string): Observable<ShoppingItem[]> {
     return this.http.get<ShoppingItem[]>(`${this.baseUrl}/lists/${listId}/items`);
   }
@@ -34,14 +38,22 @@ export class ShoppingApiService {
       note?: string;
     }
   ): Observable<ShoppingItem> {
-    return this.http.post<ShoppingItem>(`${this.baseUrl}/lists/${listId}/items`, payload);
+    return this.http.post<ShoppingItem>(
+      `${this.baseUrl}/lists/${listId}/items`,
+      payload
+    );
   }
 
   toggleItem(listId: string, itemId: string): Observable<void> {
-    return this.http.patch<void>(`${this.baseUrl}/lists/${listId}/items/${itemId}/toggle`, {});
+    return this.http.patch<void>(
+      `${this.baseUrl}/lists/${listId}/items/${itemId}/toggle`,
+      {}
+    );
   }
 
   deleteItem(listId: string, itemId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/lists/${listId}/items/${itemId}`);
+    return this.http.delete<void>(
+      `${this.baseUrl}/lists/${listId}/items/${itemId}`
+    );
   }
 }

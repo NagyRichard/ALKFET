@@ -20,12 +20,22 @@
     <p class="error">{{ errorMessage }}</p>
   }
 
-  <div class="list-grid">
-    @for (list of lists; track list.id) {
-      <a class="list-card" [routerLink]="['/lists', list.id]">
-        <h3>{{ list.name }}</h3>
-        <p>Létrehozva: {{ list.createdAt | date:'short' }}</p>
-      </a>
-    }
-  </div>
+<div class="list-grid">
+  @for (list of lists; track list.id) {
+    <div class="list-card">
+      <h3>{{ list.name }}</h3>
+      <p>Létrehozva: {{ list.createdAt | date:'short' }}</p>
+
+      <div class="list-actions">
+        <button class="open-button" [routerLink]="['/lists', list.id]">Megnyitás</button>
+
+        <button class="delete-button" (click)="deleteList(list.id)">
+          Törlés
+        </button>
+      </div>
+    </div>
+  }
+</div>
+
+
 </section>
