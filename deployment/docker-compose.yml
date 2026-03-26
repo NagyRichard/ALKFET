@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:8
+    container_name: shopping-list-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ../source/backend/ShoppingList.Api
+      dockerfile: Dockerfile
+    container_name: shopping-list-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbSettings__ConnectionString=mongodb://mongo:27017
+      - MongoDbSettings__DatabaseName=shopping_list_db
+      - MongoDbSettings__ShoppingListsCollectionName=shopping_lists
+      - MongoDbSettings__ShoppingItemsCollectionName=shopping_items
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
