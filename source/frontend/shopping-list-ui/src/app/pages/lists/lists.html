@@ -1,0 +1,31 @@
+<section class="page">
+  <div class="page-header">
+    <h2>Bevásárlólisták</h2>
+  </div>
+
+  <div class="create-panel">
+    <input
+      type="text"
+      [(ngModel)]="newListName"
+      placeholder="Új lista neve"
+    />
+    <button (click)="createList()">Létrehozás</button>
+  </div>
+
+  @if (isLoading) {
+    <p>Betöltés...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  <div class="list-grid">
+    @for (list of lists; track list.id) {
+      <a class="list-card" [routerLink]="['/lists', list.id]">
+        <h3>{{ list.name }}</h3>
+        <p>Létrehozva: {{ list.createdAt | date:'short' }}</p>
+      </a>
+    }
+  </div>
+</section>

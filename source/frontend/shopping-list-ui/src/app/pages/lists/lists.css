@@ -1,0 +1,57 @@
+.page {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.create-panel {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.create-panel input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.create-panel button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.list-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.list-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  transition: 0.2s ease;
+  background: #fafafa;
+}
+
+.list-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.error {
+  color: #b91c1c;
+}
