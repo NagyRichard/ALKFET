@@ -2,10 +2,8 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f5f5f5;
+:host {
+  display: block;
 }
 
 .app-shell {
@@ -13,21 +11,96 @@ body {
 }
 
 .app-header {
-  background: #1f2937;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
   color: white;
-  padding: 24px;
+  padding: 32px 20px;
 }
 
-.app-header h1 {
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header-text h1 {
   margin: 0 0 8px 0;
+  font-size: 36px;
 }
 
-.app-header p {
+.eyebrow {
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.subtitle {
   margin: 0;
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+.header-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header-tags span {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
 }
 
 .app-content {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+.intro-card,
+.content-card {
+  background: white;
+  border-radius: 18px;
   padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.intro-card h2 {
+  margin-top: 0;
+  color: #111827;
+}
+
+.intro-card ul {
+  margin: 12px 0 0 20px;
+  padding: 0;
+  color: #374151;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 24px 16px;
+  }
+
+  .header-text h1 {
+    font-size: 28px;
+  }
+
+  .app-content {
+    padding: 20px 16px 32px;
+  }
+
+  .intro-card,
+  .content-card {
+    padding: 18px;
+  }
 }
